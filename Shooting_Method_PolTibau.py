@@ -1,5 +1,5 @@
 import numpy as np
-from metodes import Euler, RK4, RKF45
+from metodes import Euler, RK4
 import matplotlib.pyplot as plt
 import scipy.integrate as sc
 
@@ -11,12 +11,12 @@ def f(t,x):
 
 def angle(phi):
     IC = [0,0,100*np.cos(phi),100*np.sin(phi)]
-    return IC 
+    return IC
 
 def diferencia(phi, D, tol):
     return (sc.solve_ivp(f, [0,20], angle(phi), method='RK45',rtol=tol, events=Terra).y_events[0][1][0]-D)
 
-def derivada(phi, D, h=1e-5):
+def derivada(phi, D, tol, h=1e-5):
     return (diferencia(phi+h,D,tol)-diferencia(phi,D,tol))/h
 
 def Terra(t,x):
@@ -28,8 +28,8 @@ def tir(distancia, phi_ini, tol, max_it):
     while (abs(diferencia(phi, distancia,tol)) > tol and it < max_it):
         sol = sc.solve_ivp(f, [0,20], angle(phi), method='RK45', rtol=tol, events=Terra)
         plt.plot(sol.y[0],sol.y[1],'-.')
-        phi -= diferencia(phi, distancia,tol) / derivada(phi, distancia)
-        it += 1       
+        phi -= diferencia(phi, distancia,tol) / derivada(phi, distancia,tol)
+        it += 1
     return phi, it
 
 #Terra.terminal = True #Després de que el projectil arribi al Terra aturem la resolució de la edo
@@ -80,13 +80,13 @@ for i in range(20, 200, 10):
     Yeuler = Euler(f,[0,10], Y, i)[1]
     Yrk4_e = RK4(f,[0,10], Y, 2*i)[1]
     Yeuler_e = Euler(f,[0,10], Y, 2*i)[1]
-    
+
     rEuler = np.sqrt((Yeuler_e[0][2*i]-Yeuler[0][i])**2 + (Yeuler_e[1][2*i]-Yeuler[1][i])**2)/np.sqrt(Yeuler_e[0][2*i]**2 + Yeuler_e[1][2*i]**2)
     rRK4 = np.sqrt((Yrk4_e[0][2*i]-Yrk4[0][i])**2 + (Yrk4_e[1][2*i]-Yrk4[1][i])**2)/np.sqrt(Yrk4_e[0][2*i]**2 + Yrk4_e[1][2*i]**2)
-    
+
     Eeuler.append(rEuler)
     Erk4.append(rRK4)
-    
+
 S = np.arange(20,200,10)
 plt.title("Evolució de l'error amb els mètodes d'Euler i RK4")
 plt.plot(S,np.log10(Eeuler), '-o', label = 'Error Euler')
@@ -111,7 +111,7 @@ plt.plot(Yeuler[0],Yeuler[1], '-o', label = 'Paràbola Euler')
 plt.plot(Yrk4[0], Yrk4[1], 'o-', label = 'Paràbola RK4')
 plt.legend()
 plt.show()
-  
+
 print()
 print("Exercici 5")
 #Usem de nou el mètode RK45 per ara donat un angle
@@ -158,7 +158,7 @@ while(E >= tol):
         phi1 = (phi2+phi1)/2
     else:
         phi2 = (phi2+phi1)/2
-plt.title("Aproximació amb certa dicotòmica [45,90]")
+plt.title("Aproximació amb cerca dicotòmica [45,90]")
 plt.show()
 
 
@@ -175,9 +175,5 @@ while(E >= tol):
         phi2 = (phi2+phi1)/2
     else:
         phi1 = (phi2+phi1)/2
-plt.title("Aproximació amb certa dicotòmica [0,90]")
+plt.title("Aproximació amb cerca dicotòmica [0,90]")
 plt.show()
-
-
-
-
