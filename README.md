@@ -1,25 +1,23 @@
 # Shooting Method
 
-Pràctica de Càlcul Numèric sobre equacions diferencials ordinàries: tir d'un
-projectil amb fricció quadràtica de l'aire (`R = 0.00132`, velocitat inicial de
-100 m/s) i mètode del tir (*shooting method*) per trobar l'angle de llançament
-que fa arribar el projectil a una distància donada (500 m).
+Numerical Analysis assignment on ordinary differential equations: projectile motion with
+quadratic air drag (`R = 0.00132`, initial speed of 100 m/s) and the shooting method to find
+the launch angle that makes the projectile land at a given distance (500 m).
 
-L'informe de la pràctica és a [`Shooting_Method_PolTibau.pdf`](Shooting_Method_PolTibau.pdf).
+The assignment report (in Catalan) is [`Shooting_Method_PolTibau.pdf`](Shooting_Method_PolTibau.pdf).
 
-## Estructura
+## Structure
 
-| Fitxer | Contingut |
+| File | Contents |
 | --- | --- |
-| `Shooting_Method_PolTibau.py` | Exercicis 1-6: comparació d'Euler, RK4 i RK45 (`solve_ivp`), estudi de l'error, detecció de l'impacte amb `events`, mètode del tir amb Newton-Raphson i cerca dicotòmica (amb dues solucions possibles) |
-| `metodes.py` | Mòdul d'ODEs de l'assignatura: `Euler`, `EulerBackward`, `RK2`, `RK4` i `RKF45`. L'script només n'usa `Euler` i `RK4` |
+| `Shooting_Method_PolTibau.py` | Exercises 1-6: comparison of Euler, RK4 and RK45 (`solve_ivp`), error study, impact detection with `events`, shooting method with Newton-Raphson and bisection (with two possible solutions) |
+| `metodes.py` | ODE module from the course: `Euler`, `EulerBackward`, `RK2`, `RK4` and `RKF45`. The script only uses `Euler` and `RK4` |
 
-## Execució
+## Running
 
 ```
 pip install -r requirements.txt
 python Shooting_Method_PolTibau.py
 ```
 
-L'script imprimeix els resultats de cada exercici i mostra les gràfiques
-corresponents.
+The script prints the results of each exercise and shows the corresponding plots.
